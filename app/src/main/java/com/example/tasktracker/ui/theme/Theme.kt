@@ -16,18 +16,22 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = colorPrimary,
+    onSecondary = colorOnSecondary,
+    onTertiary = colorOnTertiary,
+    onError = colorOnError,
+    background = colorBackground
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = colorPrimary,
+    onSecondary = colorOnSecondary,
+    onTertiary = colorOnTertiary,
+    onError = colorOnError,
+    background = colorBackground
 
     /* Other default colors to override
-    background = Color(0xFFFFFBFE),
+    ,
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
@@ -45,10 +49,12 @@ fun TaskTrackerTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
+        /*
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
+        */
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
@@ -57,7 +63,7 @@ fun TaskTrackerTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
