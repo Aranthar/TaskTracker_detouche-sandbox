@@ -21,10 +21,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import com.example.tasktracker.R
 import com.example.tasktracker.components.componentsShape
 import com.example.tasktracker.ui.theme.colorBackground
+import com.example.tasktracker.ui.theme.colorOnError
+import com.example.tasktracker.ui.theme.colorOnTertiary
 import com.example.tasktracker.ui.theme.colorPrimary
 
 @Composable
@@ -54,7 +57,7 @@ fun NormalTextComponent(value: String) {
 }
 
 @Composable
-fun labelTextComponent(value: String) {
+fun LabelTextComponent(value: String) {
     Text(
         text = value,
         modifier = Modifier
@@ -68,30 +71,56 @@ fun labelTextComponent(value: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFiledComponent(labelValue: String, painterResource: Painter) {
+fun EmailFiledComponent(labelValue: String, painterResource: Painter) {
     var textValue by rememberSaveable { mutableStateOf("") }
-    var isError by rememberSaveable { mutableStateOf(true) }
-    val errorMessage = "" // TODO: Перенести текст ошибки
+    var isError by rememberSaveable { mutableStateOf(false) }
+    var errorMessage by rememberSaveable { mutableStateOf("Неизвестная ошибка") }
+    val emailRegex = Regex("""(\w)+@(\w)+\.(\w)+""")
 
     OutlinedTextField(
         value = textValue,
         onValueChange = {
             textValue = it
-            isError = getInfoAboutDefineFieldType(labelValue)
-                        },
-        label = { Text(text = labelValue) },
+            if (getInfoAboutDatabase(labelValue)) {
+                isError = true
+                errorMessage = "Данная почта уже существует"
+            } else {
+                /*
+                    If the validation check is successful and the requirements are met,
+                    we get the reverse value so as not to show an error when processing is successful
+                */
+                isError = !textValue.contains(emailRegex)
+                if (isError) {
+                    errorMessage = "Некорректный домен почты"
+                }
+            }
+        },
+        label = {
+            Text(
+                text = labelValue,
+                color = when {
+                    !isError && textValue.isNotEmpty() -> colorOnTertiary
+                    isError -> colorOnError
+                    else -> colorPrimary
+                }
+            )
+        },
         isError = isError,
         supportingText = {
-            if (isError) labelTextComponent(errorMessage)
+            if (isError) LabelTextComponent(errorMessage)
         },
         trailingIcon = {
             if (isError)
                 Icon(painter = painterResource(id = R.drawable.error_icon),"error", tint = MaterialTheme.colorScheme.onError)
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = colorPrimary,
+            focusedBorderColor = if(!isError && textValue.isNotEmpty()) {
+                colorOnTertiary
+            } else colorPrimary,
             focusedLabelColor = colorPrimary,
-            unfocusedBorderColor = Color.LightGray,
+            unfocusedBorderColor = if(!isError && textValue.isNotEmpty()) {
+                    colorOnTertiary
+                } else Color.LightGray,
             cursorColor = colorPrimary,
             containerColor = colorBackground
         ),
@@ -101,7 +130,7 @@ fun TextFiledComponent(labelValue: String, painterResource: Painter) {
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
         },
-        keyboardActions = KeyboardActions { isError = getInfoAboutDefineFieldType(labelValue) },
+//        keyboardActions = KeyboardActions { isError = getInfoAboutDatabase(labelValue) },
         modifier = Modifier
             .fillMaxWidth()
             .clip(componentsShape.small)

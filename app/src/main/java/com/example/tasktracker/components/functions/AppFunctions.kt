@@ -1,19 +1,19 @@
 package com.example.tasktracker.components.functions
 
+// Check Regex Error
 private fun defineFieldType(type: String): Regex {
-    val loginRegularExpression = Regex("^(?=.*[a-z])(?=.*[A-Z])(\\d?)+.{1,15}$")
-    val mailRegularExpression = Regex("""(\w)+@(\w)+\.(\w)+""")
-    val passwordRegularExpression = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,100}\$")
-
-    // TODO: написать функцию определения типа поля
-    return Regex("""""")
+    return when (type) {
+        "Логин" -> Regex("^(?=.*[a-z])(?=.*[A-Z])(\\d?)+.{1,15}$")
+        "Пароль" -> Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,100}\$")
+        else -> Regex("")
+    }
 }
 
-private fun complianceCheck() {
-    // TODO: написать функцию оценки выполнения требований
-}
-
-fun getInfoAboutDefineFieldType(type: String): Boolean {
-    // TODO: написать функцию вызова функции оценки
+// Check DataBase Error
+private fun checkDatabaseForProfile(): Boolean {
     return false
+}
+
+fun getInfoAboutDatabase(input: String): Boolean {
+    return checkDatabaseForProfile()
 }
