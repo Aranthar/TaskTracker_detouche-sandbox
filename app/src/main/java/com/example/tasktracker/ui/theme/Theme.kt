@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
+private val darkColorScheme = darkColorScheme(
     primary = colorPrimary,
     onSecondary = colorOnSecondary,
     onTertiary = colorOnTertiary,
@@ -19,7 +19,7 @@ private val DarkColorScheme = darkColorScheme(
     background = colorBackground
 )
 
-private val LightColorScheme = lightColorScheme(
+private val lightColorScheme = lightColorScheme(
     primary = colorPrimary,
     onSecondary = colorOnSecondary,
     onTertiary = colorOnTertiary,
@@ -32,7 +32,7 @@ fun TaskTrackerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if(darkTheme) DarkColorScheme else LightColorScheme
+    val colorScheme = if(darkTheme) darkColorScheme else lightColorScheme
     val view = LocalView.current
 
     if (!view.isInEditMode) {

@@ -8,10 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.tasktracker.components.HeadingTextComponent
-import com.example.tasktracker.components.NormalTextComponent
+import com.example.tasktracker.R
+import com.example.tasktracker.components.functions.TextFiledComponent
 
 @Composable
 fun SignUpScreen() {
@@ -26,8 +27,7 @@ fun SignUpScreen() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            HeadingTextComponent(value = "Регистрация")
-            NormalTextComponent(value = "Зарегистрироваться")
+
         }
     }
 }
