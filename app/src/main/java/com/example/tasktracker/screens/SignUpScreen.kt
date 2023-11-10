@@ -13,7 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tasktracker.R
-import com.example.tasktracker.components.functions.EmailFiledComponent
+import com.example.tasktracker.components.functions.HeadingTextComponent
+import com.example.tasktracker.components.functions.TextFiledComponent
 
 @Composable
 fun SignUpScreen() {
@@ -28,8 +29,15 @@ fun SignUpScreen() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            EmailFiledComponent(stringResource(id = R.string.email_label), painterResource(id = R.drawable.email_icon))
-            EmailFiledComponent(stringResource(id = R.string.email_label), painterResource(id = R.drawable.email_icon))
+            HeadingTextComponent(value = "Регистрация")
+            TextFiledComponent(
+                labelValue = stringResource(id = R.string.login_label),
+                painterResource = painterResource(id = R.drawable.login_icon)
+            )
+            TextFiledComponent(
+                labelValue = stringResource(id = R.string.email_label),
+                painterResource = painterResource(id = R.drawable.email_icon)
+            )
         }
     }
 }

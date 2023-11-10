@@ -3,7 +3,6 @@ package com.example.tasktracker.components.functions
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,10 +20,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import com.example.tasktracker.R
 import com.example.tasktracker.components.componentsShape
+import com.example.tasktracker.data.ErrorMessageObject
+import com.example.tasktracker.data.RegexObject
 import com.example.tasktracker.ui.theme.colorBackground
 import com.example.tasktracker.ui.theme.colorOnError
 import com.example.tasktracker.ui.theme.colorOnTertiary
@@ -71,11 +71,13 @@ fun LabelTextComponent(value: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmailFiledComponent(labelValue: String, painterResource: Painter) {
+fun TextFiledComponent(labelValue: String, painterResource: Painter) {
+    val errorMessageMassive = ErrorMessageObject.getErrorMessages(labelValue)
+
     var textValue by rememberSaveable { mutableStateOf("") }
     var isError by rememberSaveable { mutableStateOf(false) }
     var errorMessage by rememberSaveable { mutableStateOf("Неизвестная ошибка") }
-    val emailRegex = Regex("""(\w)+@(\w)+\.(\w)+""")
+    val regex = RegexObject.getRegex(labelValue)
 
     OutlinedTextField(
         value = textValue,
@@ -83,16 +85,14 @@ fun EmailFiledComponent(labelValue: String, painterResource: Painter) {
             textValue = it
             if (getInfoAboutDatabase(labelValue)) {
                 isError = true
-                errorMessage = "Данная почта уже существует"
+                errorMessage = errorMessageMassive[1]
             } else {
                 /*
                     If the validation check is successful and the requirements are met,
                     we get the reverse value so as not to show an error when processing is successful
                 */
-                isError = !textValue.contains(emailRegex)
-                if (isError) {
-                    errorMessage = "Некорректный домен почты"
-                }
+                isError = !textValue.matches(regex)
+                if (isError) errorMessage = errorMessageMassive[0]
             }
         },
         label = {
@@ -130,7 +130,6 @@ fun EmailFiledComponent(labelValue: String, painterResource: Painter) {
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
         },
-//        keyboardActions = KeyboardActions { isError = getInfoAboutDatabase(labelValue) },
         modifier = Modifier
             .fillMaxWidth()
             .clip(componentsShape.small)

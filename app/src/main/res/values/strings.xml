@@ -1,13 +1,9 @@
 <resources>
     <string name="app_name">TaskTracker</string>
+
+    <!--  Authentication  -->
     <string name="login_label">Логин</string>
     <string name="email_label">Почта</string>
     <string name="password_label">Пароль</string>
     <string name="confirm_password_label">Подтверждение пароля</string>
-    <string name="error_email_message">Некорректный домен почты</string>
-    <string name="unknown_error">Неизвестная ошибка</string>
-    <string name="error_login_regex_message">Логин должен содержать только латинские буквы и цифры</string>
-    <string name="error_login_BD_message">Данный логин уже существует</string>
-    <string name="error_email_BD_message">Данная почта уже существует</string>
-    <string name="error_email_regex_message">Некорректный домен почты</string>
 </resources>
