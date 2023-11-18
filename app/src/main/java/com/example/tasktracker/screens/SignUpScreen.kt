@@ -1,9 +1,9 @@
 package com.example.tasktracker.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,8 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tasktracker.R
+import com.example.tasktracker.components.functions.HeadingTextComponent
 import com.example.tasktracker.components.functions.PasswordConfirmFiledComponent
 import com.example.tasktracker.components.functions.PasswordFiledComponent
+import com.example.tasktracker.components.functions.SignInUpButton
 import com.example.tasktracker.components.functions.TextFiledComponent
 import com.example.tasktracker.viewModels.SignUpViewModel
 
@@ -26,7 +28,7 @@ fun SignUpScreen() {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp)
+            .padding(horizontal = 29.dp, vertical = 75.dp)
             .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
@@ -34,6 +36,11 @@ fun SignUpScreen() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
+            HeadingTextComponent(
+                value = stringResource(id = R.string.header_text_registration),
+                modifier = Modifier
+                    .padding(start = 30.dp, end = 30.dp)
+            )
             TextFiledComponent(
                 labelValue = stringResource(id = R.string.login_label),
                 painterResource = painterResource(id = R.drawable.login_icon),
@@ -54,7 +61,11 @@ fun SignUpScreen() {
                 painterResource = painterResource(id = R.drawable.lock_icon),
                 viewModel
             )
-            Log.d("ANIME", viewModel.infoAboutRegistration().toString())
+            androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(71.dp))
+            // TODO: сделать функцию регистрации
+            SignInUpButton(stringResource(R.string.text_registration), {  }, viewModel.infoAboutRegistration())
+            // TODO: сделать функцию перехода на активити авторизации
+            SignInUpButton(stringResource(R.string.text_account), {  }, true)
         }
     }
 }

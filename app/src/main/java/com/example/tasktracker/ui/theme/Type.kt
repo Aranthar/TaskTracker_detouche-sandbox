@@ -38,8 +38,8 @@ val Typography = Typography(
     bodyMedium = TextStyle(
         fontFamily = fontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 15.sp,
-        lineHeight = 20.49.sp,
+        fontSize = 18.sp,
+        lineHeight = 24.59.sp,
     ),
     labelSmall = TextStyle(
         fontFamily = fontFamily,

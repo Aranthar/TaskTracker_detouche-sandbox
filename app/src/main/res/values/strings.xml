@@ -2,10 +2,13 @@
     <string name="app_name">TaskTracker</string>
 
     <!--  Authentication  -->
+    <string name="header_text_registration">Регистрация</string>
     <string name="login_label">Логин</string>
     <string name="email_label">Почта</string>
     <string name="password_label">Пароль</string>
     <string name="confirm_password_label">Подтверждение пароля</string>
     <string name="hide_password">Скрыть пароль</string>
     <string name="show_password">Показать пароль</string>
+    <string name="text_registration">Зарегистрироваться</string>
+    <string name="text_account">Уже есть аккаунт?</string>
 </resources>

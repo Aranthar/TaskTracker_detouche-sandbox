@@ -2,13 +2,19 @@ package com.example.tasktracker.components.functions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,9 +28,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,23 +39,30 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.example.tasktracker.R
 import com.example.tasktracker.components.componentsShape
 import com.example.tasktracker.data.ErrorMessageObject
 import com.example.tasktracker.data.RegexObject
+import com.example.tasktracker.ui.theme.colorActiveButton
 import com.example.tasktracker.ui.theme.colorBackground
+import com.example.tasktracker.ui.theme.colorNotActiveButton
 import com.example.tasktracker.ui.theme.colorOnError
+import com.example.tasktracker.ui.theme.colorOnSecondary
 import com.example.tasktracker.ui.theme.colorOnTertiary
 import com.example.tasktracker.ui.theme.colorPrimary
+import com.example.tasktracker.ui.theme.colorTextNotActiveButton
 import com.example.tasktracker.viewModels.SignUpViewModel
 
 @Composable
-fun HeadingTextComponent(value: String) {
+fun HeadingTextComponent(value: String, modifier: Modifier) {
     Text(
         text = value,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .heightIn()
+            .paddingFromBaseline(0.dp, 55.dp)
             .background(MaterialTheme.colorScheme.background),
         style = MaterialTheme.typography.titleLarge,
         color = MaterialTheme.colorScheme.onSecondary
@@ -59,22 +73,32 @@ fun HeadingTextComponent(value: String) {
 fun NormalTextComponent(value: String) {
     Text(
         text = value,
+        textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn()
-            .background(MaterialTheme.colorScheme.background),
+            .heightIn(),
         style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSecondary
     )
 }
 
 @Composable
-fun LabelTextComponent(value: String) {
+fun LabelTextComponent(value: String, viewModel: SignUpViewModel) {
+//    var textHeight by remember { mutableStateOf(0.dp) }
+    val context = LocalDensity.current
+//    viewModel.changeHeightLabel(textHeight)
+
     Text(
         text = value,
         modifier = Modifier
             .fillMaxWidth()
             .heightIn()
+//            .onGloballyPositioned { coordinates ->
+//                val height = with(context) {
+//                    coordinates.size.height.toDp()
+//                }
+//                textHeight = height
+//                Log.d("ANIME", textHeight.toString())
+//            }
             .background(MaterialTheme.colorScheme.background),
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.error
@@ -168,7 +192,7 @@ fun TextFiledComponent(labelValue: String, painterResource: Painter, viewModel: 
             if (isError) {
                 Column {
                     errorMessage.split("||").forEach { text ->
-                        LabelTextComponent(text)
+                        LabelTextComponent(text, viewModel)
                     }
                 }
             }
@@ -194,9 +218,10 @@ fun TextFiledComponent(labelValue: String, painterResource: Painter, viewModel: 
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
         },
+        shape = componentsShape.medium,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(componentsShape.small)
+            .padding(bottom = 20.dp)
     )
 }
 
@@ -210,7 +235,7 @@ fun PasswordFiledComponent(labelValue: String, painterResource: Painter, viewMod
     var passwordValue by rememberSaveable { mutableStateOf("") }
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
     var isError by rememberSaveable { mutableStateOf(false) }
-    var errorMessage by rememberSaveable { mutableStateOf("Неизвестная ошибка") }
+    var errorMessage by rememberSaveable { mutableStateOf("") }
 
 
     OutlinedTextField(
@@ -272,7 +297,7 @@ fun PasswordFiledComponent(labelValue: String, painterResource: Painter, viewMod
             if (isError) {
                 Column {
                     errorMessage.split("||").forEach { text ->
-                        LabelTextComponent(text)
+                        LabelTextComponent(text, viewModel)
                     }
                 }
             }
@@ -306,9 +331,10 @@ fun PasswordFiledComponent(labelValue: String, painterResource: Painter, viewMod
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
         },
+        shape = componentsShape.medium,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(componentsShape.small)
+            .padding(bottom = 20.dp)
     )
 }
 
@@ -322,7 +348,7 @@ fun PasswordConfirmFiledComponent(labelValue: String, painterResource: Painter, 
     var passwordValue by rememberSaveable { mutableStateOf("") }
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
     var isError by rememberSaveable { mutableStateOf(false) }
-    var errorMessage by rememberSaveable { mutableStateOf("Неизвестная ошибка") }
+    var errorMessage by rememberSaveable { mutableStateOf("") }
 
     OutlinedTextField(
         value = passwordValue,
@@ -345,7 +371,7 @@ fun PasswordConfirmFiledComponent(labelValue: String, painterResource: Painter, 
         },
         isError = isError,
         supportingText = {
-            if (isError) LabelTextComponent(errorMessage)
+            if (isError) LabelTextComponent(errorMessage, viewModel)
         },
         trailingIcon = {
             val iconImage = if(passwordVisible.value) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
@@ -379,8 +405,29 @@ fun PasswordConfirmFiledComponent(labelValue: String, painterResource: Painter, 
         keyboardActions = KeyboardActions {
             localFocusManager.clearFocus()
         },
+        shape = componentsShape.medium,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(componentsShape.small)
     )
+}
+
+@Composable
+fun SignInUpButton(text: String, onClick: () -> Unit, enable: Boolean) {
+    Button(
+        onClick = onClick,
+        enabled = enable,
+        colors = ButtonDefaults.buttonColors(
+            disabledContainerColor = colorNotActiveButton,
+            disabledContentColor = colorTextNotActiveButton,
+            containerColor = colorActiveButton,
+            contentColor = colorOnSecondary
+            ),
+        shape = componentsShape.medium,
+        modifier = Modifier
+            .padding(bottom = 20.dp)
+            .heightIn(50.dp, 50.dp)
+            .fillMaxWidth()
+    ) {
+        NormalTextComponent(text)
+    }
 }
