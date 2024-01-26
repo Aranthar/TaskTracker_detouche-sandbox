@@ -6,9 +6,9 @@
     <string name="login_label">Логин</string>
     <string name="email_label">Почта</string>
     <string name="password_label">Пароль</string>
-    <string name="confirm_password_label">Подтверждение пароля</string>
-    <string name="hide_password">Скрыть пароль</string>
-    <string name="show_password">Показать пароль</string>
+    <string name="confirm_password_label">Подтвердите пароль</string>
+    <string name="next">Далее</string>
+    <string name="back">Назад</string>
     <string name="text_registration">Зарегистрироваться</string>
     <string name="text_account">Уже есть аккаунт?</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.tasktracker
+package com.example.tasktracker.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -69,6 +69,8 @@ dependencies {
     implementation("androidx.transition:transition-ktx:1.4.1")
     implementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-compose:2.7.6")
 
     //Tests
     testImplementation("junit:junit:4.13.2")

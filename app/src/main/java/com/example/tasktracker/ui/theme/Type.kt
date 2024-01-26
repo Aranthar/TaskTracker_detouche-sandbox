@@ -16,35 +16,33 @@ val provider = GoogleFont.Provider(
     certificates = R.array.com_google_android_gms_fonts_certs
 )
 
-val fontText = GoogleFont("Manrope")
+val fontName = GoogleFont("Inter")
 
 val fontFamily = FontFamily(
     Font(
-        googleFont = fontText,
+        googleFont = fontName,
         fontProvider = provider,
     )
 )
 
-// Set of Material typography styles to start with
 val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = fontFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 27.sp,
-        lineHeight = 36.88.sp,
-        letterSpacing = 0.sp,
-        textAlign = TextAlign.Center
+        fontWeight = FontWeight.W600,
+        fontSize = 30.sp,
+        textAlign = TextAlign.Center,
+        lineHeight = 36.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = fontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.W400,
         fontSize = 18.sp,
-        lineHeight = 24.59.sp,
+        lineHeight = 22.sp
     ),
     labelSmall = TextStyle(
         fontFamily = fontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        lineHeight = 16.39.sp,
+        fontWeight = FontWeight.W300,
+        fontSize = 15.sp,
+        lineHeight = 14.sp
     )
 )
